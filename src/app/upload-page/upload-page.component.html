@@ -1,0 +1,89 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">News</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/home-page">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/categories-page">Categories</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/account-info">Account</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/upload-page">Upload <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-1" type="text" placeholder="Search">
+      <button class="btn btn-secondary my-2 my-sm-0" type="submit">
+          <i class="fas fa-search text-white"
+          aria-hidden="true"></i>
+      </button>
+
+    </form>      
+  </div>
+</nav>
+
+<div class="container" style="margin-top:30px">
+
+	<div class="row">
+      <h3> Upload A Video </h3>
+	  <div class="col-md-6">
+	      <!-- <form> -->
+              <div class="form-group files">
+                  <input #videoInput type="file" accept="video/*">
+              </div>
+        <!-- </form> -->
+    </div>
+
+  
+  </div>
+  
+  <div>
+    <h5>Description</h5>
+    <textarea type="text" class="form-control" #description></textarea>
+  </div>
+
+  <div>
+    <h5 style="margin-top: 20px">Tags</h5>  
+    <input data-role="tagsinput"  value={{cats}} #tags>
+
+    
+  </div>
+  <p >{{tags.value}}</p>
+  <button style="margin-top:20px" class="btn btn-success" (click)="upload(description.value, tags.value, videoInput.files)">Upload</button>
+
+</div>
+  <!-- <a data-toggle="modal" href="#myModal" class="badge badge-pill badge-warning">Add <b>+</b></a> -->
+  
+  <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+  
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+           
+            <h4><span class="glyphicon glyphicon-lock"></span> Select tags</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+
+            <span *ngFor="let cat of cats" class="badge badge-pill badge-danger" style="margin: 5px;" (click)="selectCat(cat)">{{cat}}</span>
+           
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-default btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+            <p>Not a member? <a href="#">Sign Up</a></p>
+            <p>Forgot <a href="#">Password?</a></p>
+          </div>
+      
+
+    </div> 
+    </div>
+
