@@ -12,10 +12,18 @@ export class CategoriesPageComponent implements OnInit {
   videos: Array<any>;
   latestURL: string;
   latestCat: Array<string>;
+  subscriptions: Array<string>;
   tags: Array<any>;
+  user: any;
 
-  constructor(private db: DbService, private router: Router, private auth: AuthService) {
+  constructor(private db: DbService, private router: Router, public auth: AuthService) {
     this.tags = new Array();
+
+    auth.user.subscribe((us) => {
+      this.user = us;
+      this.subscriptions = us.subscriptions;
+    });
+
     db.getVideos().subscribe((vids) => {
       this.videos = vids;
     });
@@ -37,6 +45,7 @@ export class CategoriesPageComponent implements OnInit {
 
   logout() {
     this.auth.signOut();
+    this.router.navigateByUrl('/login-page');
   }
 
   like(id: string, likes: number) {

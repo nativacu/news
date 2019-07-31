@@ -16,7 +16,7 @@ export class HomePageComponent implements OnInit {
   vid3: string;
   tags: Array<any>;
 
-  constructor(private db: DbService, private router: Router, private auth: AuthService) {
+  constructor(private db: DbService, private router: Router, public auth: AuthService) {
     this.tags = new Array();
     db.getVideos().subscribe((vids) => {
 
@@ -44,6 +44,7 @@ export class HomePageComponent implements OnInit {
 
   logout() {
     this.auth.signOut();
+    this.router.navigateByUrl('/login-page');
   }
 
   like(id: string, likes: number) {
