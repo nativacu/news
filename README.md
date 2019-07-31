@@ -1,4 +1,5 @@
 # NewsApp
+Available at https://news2-bca5d.firebaseapp.com/home-page
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
 
