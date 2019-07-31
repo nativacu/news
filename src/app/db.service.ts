@@ -5,6 +5,7 @@ import { Video } from './video.model';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Tag } from './tag.model';
+import { User } from './user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -98,6 +99,10 @@ export class DbService {
       }
     });
     return;
+  }
+
+  public updateUserTags(tag: Array<string>, user: User) {
+    this.afs.collection('user').doc(user.email).update({subscriptions: tag});
   }
 }
 

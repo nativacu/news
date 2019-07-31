@@ -24,7 +24,7 @@ export class AuthService {
             switchMap(user => {
                 // Logged in
               if (user) {
-                return this.afs.doc<User>(`user/${user.uid}`).valueChanges();
+                return this.afs.doc<User>(`user/${user.email}`).valueChanges();
               } else {
                 // Logged out
                 return of(null);
@@ -42,7 +42,7 @@ export class AuthService {
     }
 
     private createUser(user, data) {
-        const userRef: AngularFirestoreDocument<any> = this.afs.doc(`user/${user.uid}`);
+        const userRef: AngularFirestoreDocument<any> = this.afs.doc(`user/${user.email}`);
         return userRef.set(data, {merge: true});
     }
 
@@ -52,7 +52,7 @@ export class AuthService {
 
      addInfo(data: any) {
         const sub = this.user.subscribe((currUser) => {
-            const userRef: AngularFirestoreDocument<any> = this.afs.doc(`user/${currUser.uid}`);
+            const userRef: AngularFirestoreDocument<any> = this.afs.doc(`user/${currUser.email}`);
             return userRef.set(data, {merge: true});
         });
     }
@@ -62,4 +62,12 @@ export class AuthService {
             this.router.navigate(['/login-page']);
         });
       }
+
+    updateTags(tag: Array<string>) {
+        this.user.subscribe((currUser) => {
+            console.log(currUser.email);
+            const userRef: AngularFirestoreDocument<any> = this.afs.collection('user').doc(`${currUser.email}`);
+            return userRef.update({categories: tag});
+        });
+    }
 }

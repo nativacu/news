@@ -100,9 +100,9 @@
 
     <h1 style="text-align: center; margin-top: 20px; margin-bottom: 20px;">From your subscriptions</h1>
     <!-- Carousel  -->
-    <div class="container">
+    <div *ngFor="let cat of tags" class="container">
       
-      <div *ngFor="let cat of tags">
+      <div *ngIf="subscriptions.includes(cat)">
         <h3>{{cat}}</h3>
               <div *ngFor="let video of videos" class="d-inline-block"  style="margin-right: 30px;">
                 <div *ngIf="video.tags.includes(cat)" class="card border-primary col mb-3" style="max-width: 20rem;">

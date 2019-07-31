@@ -53,4 +53,22 @@ export class CategoriesPageComponent implements OnInit {
     document.getElementById('likeButton').setAttribute('disabled', 'true');
   }
 
+  subscribe(cat: string) {
+    const cats = this.subscriptions;
+    cats.push(cat);
+    console.log(cats);
+    this.db.updateUserTags(cats, this.user);
+  }
+
+  unsubscribe(cat: string) {
+    const cats = new Array<string>();
+    for (const category of this.subscriptions) {
+      if (category !== cat) {
+        cats.push(category);
+      }
+    }
+    this.db.updateUserTags(cats, this.user);
+  }
+
+
 }

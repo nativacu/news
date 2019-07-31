@@ -30,8 +30,8 @@
       
       <div *ngFor="let cat of tags">
          
-          <h3 *ngIf="subscriptions">{{cat }}  <button type="button" *ngIf="subscriptions.includes(cat)" disabled class="btn btn-info" style="margin-left: 2%">Subscribe</button>
-            <button type="button" *ngIf="!subscriptions.includes(cat)" class="btn btn-info" style="margin-left: 2%" (click)="subscribe()">Subscribe</button>
+          <h3 *ngIf="subscriptions">{{cat }}  <button type="button" *ngIf="subscriptions.includes(cat)" class="btn btn-info" style="margin-left: 2%" (click)="unsubscribe(cat)">Unsubscribe</button>
+          <button type="button" *ngIf="!subscriptions.includes(cat)" class="btn btn-info" style="margin-left: 2%" (click)="subscribe(cat)">Subscribe</button>
           </h3>
               <div *ngFor="let video of videos" class="d-inline-block"  style="margin-right: 30px;">
                 <div *ngIf="video.tags.includes(cat)" class="card border-primary col mb-3" style="max-width: 20rem;">

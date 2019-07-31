@@ -15,7 +15,8 @@ export class HomePageComponent implements OnInit {
   vid2: string;
   vid3: string;
   tags: Array<any>;
-
+  subscriptions: Array<string>;
+  user: any;
   constructor(private db: DbService, private router: Router, public auth: AuthService) {
     this.tags = new Array();
     db.getVideos().subscribe((vids) => {
@@ -25,6 +26,11 @@ export class HomePageComponent implements OnInit {
       this.vid2 = this.videos[1].url;
       this.vid3 = this.videos[2].url;
 
+    });
+
+    auth.user.subscribe((us) => {
+      this.user = us;
+      this.subscriptions = us.subscriptions;
     });
 
     db.getTags().subscribe((tags) => {
