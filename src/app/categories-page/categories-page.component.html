@@ -1,3 +1,63 @@
-<p>
-  categories-page works!
-</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">News</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/categories-page">Categories</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/account-info">Account</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/upload-page">Upload</a>
+        </li>
+      </ul>
+      <button class="btn btn-secondary my-2 my-sm-0" style="margin-right: 30px" (click)="login()"> Login</button>
+      <button class="btn btn-secondary my-2 my-sm-0" style="margin-right: 30px" (click)="logout()"> Logout</button>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-1" type="text" placeholder="Search">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">
+            <i class="fas fa-search text-white"
+            aria-hidden="true"></i>
+        </button>
+
+      </form>      
+    </div>
+  </nav>
+
+
+    <h1 style="text-align: center; margin-top: 20px; margin-bottom: 20px;">All Videos</h1>
+    <div class="container">
+      
+      <div *ngFor="let cat of tags">
+         
+          <h3>{{cat}}  <button type="button" class="btn btn-info" style="margin-left: 2%">Subscribe</button></h3>
+              <div *ngFor="let video of videos" class="d-inline-block"  style="margin-right: 30px;">
+                <div *ngIf="video.tags.includes(cat)" class="card border-primary col mb-3" style="max-width: 20rem;">
+                  <div class="card-body"> 
+                    <video style="height: 200px; width: 100%; display: inline-block;"  controls> <source src={{video.url}} type="video/mp4"> </video>
+                    <p class="card-text">{{video.description}}</p>
+                    <span *ngFor="let tag of video.tags" class="badge badge-pill badge-primary" style="margin-right: 5px; margin-bottom:5px">{{tag}}</span>
+    
+                    <div style="display:inline">
+                      <p> <button type="button" id="likeButton" class="btn btn-outline-primary btn-sm" (click)="like(video.payload.doc._document.key.path.segments[6],video.payload.doc._document.proto.fields.likes.integerValue)"><i class="fas fa-heart"></i></button>
+                        {{video.likes}}
+                      </p>
+                      
+                    </div>
+                  </div>
+       
+      </div>
+
+      
+        
+        </div>
+    </div>
+    

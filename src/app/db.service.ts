@@ -3,6 +3,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { Video } from './video.model';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Tag } from './tag.model';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +37,15 @@ export class DbService {
     return this.afs.collection('videos').doc(id).snapshotChanges();
   }
 
+  updateLikes(id: string, likes: number) {
+    likes++;
+
+    const data: any = {
+      likes
+    };
+    this.afs.collection('videos').doc(id).update(data);
+  }
+
   addVideo(video: Video) {
 
     const data: any = {
@@ -53,7 +64,40 @@ export class DbService {
   }
 
   getVideos() {
-      return this.afs.collection('videos').snapshotChanges();
+      return this.afs.collection('videos').snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          return a.payload.doc.data() as Video;
+        }))
+      );
+  }
+
+  getTags() {
+    return this.afs.collection('categories').snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        return a.payload.doc.data() as Tag;
+      }))
+    );
+  }
+
+  addTags(tags: Array<string>) {
+    const ts = Array<any>();
+    this.getTags().subscribe((currTags) => {
+      for (const x of currTags) {
+        ts.push(x.cat);
+      }
+      for (const t of tags) {
+        if (!ts.includes(t)) {
+          return new Promise<any>((resolve, reject) => {
+            this.afs
+                .collection('categories')
+                .add({cat: t})
+                .then(res => {
+                }, err => reject(err));
+          });
+        }
+      }
+    });
+    return;
   }
 }
 

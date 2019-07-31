@@ -19,6 +19,8 @@
           <a class="nav-link" href="/upload-page">Upload</a>
         </li>
       </ul>
+      <button class="btn btn-secondary my-2 my-sm-0" style="margin-right: 30px" (click)="login()"> Login</button>
+      <button class="btn btn-secondary my-2 my-sm-0" style="margin-right: 30px" (click)="logout()"> Logout</button>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-1" type="text" placeholder="Search">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">
@@ -47,8 +49,9 @@
           <!--Mask color-->
           <div class="view">
             <!--Video source-->
-            <video class="video-fluid" autoplay loop muted >
-              <source src="https://firebasestorage.googleapis.com/v0/b/news-325f6.appspot.com/o/Nick%26Jess.mp4?alt=media&token=6371c523-2374-4cdb-8d8b-5c6798753755">
+            <video class="video-fluid" autoplay loop muted controls>
+              <!-- <source src={{}}> -->
+              <!-- <source src="https://firebasestorage.googleapis.com/v0/b/news-325f6.appspot.com/o/Nick%26Jess.mp4?alt=media&token=6371c523-2374-4cdb-8d8b-5c6798753755"> -->
               <!-- <source src="https://mdbootstrap.com/img/video/Lines.mp4" type="video/mp4" /> -->
               <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/X-A9jPacX0g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
             </video>
@@ -70,7 +73,7 @@
           <!--Mask color-->
           <div class="view">
             <!--Video source-->
-            <video class="video-fluid" autoplay loop muted>
+            <video class="video-fluid" controls loop muted>
               <source *ngIf="latestURL" src={{latestURL}}>
               <!-- <source src="https://mdbootstrap.com/img/video/animation-intro.mp4" type="video/mp4" /> -->
             </video>
@@ -92,7 +95,7 @@
           <!--Mask color-->
           <div class="view">
             <!--Video source-->
-            <video class="video-fluid" autoplay loop muted>
+            <video class="video-fluid"  controls loop muted>
                 <source src="https://mdbootstrap.com/img/video/Lines.mp4" type="video/mp4" />
             </video>
             <div class="mask rgba-black-strong"></div>
@@ -125,25 +128,28 @@
     <!-- Carousel  -->
     <div class="container">
       
-        <h3>Tech News</h3>
-        <!-- <video>
-          <source src="https://lh3.googleusercontent.com/99bjneZ8rbRNtpGoDAke5ifjzWSMWsO6mmz8k2ccw1BpOuiUmW_KPLdQ4JoZHQJl8JgfekgprCEA7smSXoG7rmvVRkGjt5X9x7zNUNl-crAMbhxR8OUsBWVgLjXxvK8woMYc4YWkcggGY9Lm1GH5B4i2m4QuuLGDFYUrYFGQJ2aKdEXku2LAUQhawei_2IaalPTV9uKo99eFpgSZkhUvxWoSekwxBreNAmlSRig3R7TqeLExuxlXXMMZutqmcuvN5mrqcBNxxsotvRyhYYz24_NHvzEOPsBI5gsSea6CAPQVSso5WrWTGUzZSXVPvXYDhE0sYFfrnKF3EKmgTFMsTo7nNc9T3CdwO7LkSs9Pac84JNnYM5gggAvHHR9g-Z_OpYKNB6ww0UNOVZpOj-LDrVprAsLcMAfY-ZSujXQ18ISGpsHbjbnvBvuAkwMhRBnu9Qz62VbtSVY8ghWs6XLFnAIe78guPjt8IjZ-9jtU5J_qO3FrhGkWQuSl36ooV36QGHlwF6vNMe-KW-sISDEnunGvno5Qc6ZF4pl74bku76jnj8CG4Xmypv2XiB3lX0oeMcle3q0usxPfUuf4DObGjhTTmIp-kB-v-j30CcktensY82KGP2HlC3-2dLKhitMgOkCzTW5nVD24sIL_lTvIroCDgzoG-CKB=w1605-h903-k-no" type="video/mkv">
-        </video> -->
-        
-        <p>Video description</p>
-        <a href="" style="float: right">See more..</a>
-        <button  type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-heart"></i></button>
+      <div *ngFor="let cat of tags">
+        <h3>{{cat}}</h3>
+              <div *ngFor="let video of videos" class="d-inline-block"  style="margin-right: 30px;">
+                <div *ngIf="video.tags.includes(cat)" class="card border-primary col mb-3" style="max-width: 20rem;">
+                  <div class="card-body"> 
+                    <video style="height: 200px; width: 100%; display: inline-block;"  controls> <source src={{video.url}} type="video/mp4"> </video>
+                    <p class="card-text">{{video.description}}</p>
+                    <span *ngFor="let tag of video.tags" class="badge badge-pill badge-primary" style="margin-right: 5px; margin-bottom:5px">{{tag}}</span>
+    
+                    <div style="display:inline">
+                      <p> <button type="button" id="likeButton" class="btn btn-outline-primary btn-sm" (click)="like(video.payload.doc._document.key.path.segments[6],video.payload.doc._document.proto.fields.likes.integerValue)"><i class="fas fa-heart"></i></button>
+                        {{video.likes}}
+                      </p>
+                      
+                    </div>
+                  </div>
+       
+      </div>
 
-        <!-- <div class="row"> -->
-          
-          <div *ngFor="let video of videos let i = index" class="card border-primary col mb-3" style="max-width: 20rem;">
-            <div class="card-body">
-              <video style="height: 200px; width: 100%; display: inline-block;"  controls> <source src={{video.payload.doc._document.proto.fields.url.stringValue}} type="video/mp4"> </video>
-              <p class="card-text">{{video.payload.doc._document.proto.fields.description.stringValue}}</p>
-              <p class="card-text" *ngFor="let tag of video.payload.doc._document.proto.fields.tags"> {{tag.stringValue}}</p>
-            </div>
-          
-        <!-- </div> -->
+      
+        
+        </div>
     </div>
     
     
