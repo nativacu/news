@@ -7,7 +7,6 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import * as firebase from 'firebase/app';
 
 
 @Injectable({ providedIn: 'root' })
@@ -25,7 +24,7 @@ export class AuthService {
             switchMap(user => {
                 // Logged in
               if (user) {
-                return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+                return this.afs.doc<User>(`user/${user.uid}`).valueChanges();
               } else {
                 // Logged out
                 return of(null);
@@ -35,43 +34,25 @@ export class AuthService {
 
      }
 
-    private oAuthLogin(provider) {
-        return this.afAuth.auth.signInWithPopup(provider)
-        .then((credential) => {
-            this.updateUserData(credential.user);
-        });
-    }
 
-    emailRegister(email: string, password: string, data: JSON) {
+    public emailRegister(email: string, password: string, data: any) {
         return this.afAuth.auth.createUserWithEmailAndPassword(email, password).then((credential) => {
             this.createUser(credential.user, data);
         });
     }
 
     private createUser(user, data) {
-        const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+        const userRef: AngularFirestoreDocument<any> = this.afs.doc(`user/${user.uid}`);
         return userRef.set(data, {merge: true});
     }
 
-    public loginMail(email,password) {
+    public loginMail(email: string, password: string) {
         return this.afAuth.auth.signInWithEmailAndPassword(email, password);
-    }
-
-    private updateUserData(user: User) {
-        const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-        const data: any = {
-            uid: user.uid,
-            email: user.email,
-            fName: user.fName,
-            lName: user.lName
-        };
-        return userRef.set(data, {merge: true});
     }
 
      addInfo(data: any) {
         const sub = this.user.subscribe((currUser) => {
-            const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${currUser.uid}`);
-
+            const userRef: AngularFirestoreDocument<any> = this.afs.doc(`user/${currUser.uid}`);
             return userRef.set(data, {merge: true});
         });
     }

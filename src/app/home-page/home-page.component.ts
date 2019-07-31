@@ -11,18 +11,20 @@ import { AuthService } from '../auth.service';
 export class HomePageComponent implements OnInit {
 
   videos: Array<any>;
-  latestURL: string;
-  latestCat: Array<string>;
+  vid1: string;
+  vid2: string;
+  vid3: string;
   tags: Array<any>;
 
   constructor(private db: DbService, private router: Router, private auth: AuthService) {
     this.tags = new Array();
     db.getVideos().subscribe((vids) => {
-      this.videos = vids;
-      this.latestURL = this.videos[0].url;
 
-      console.log(this.videos[0].tags);
-      console.log(this.latestURL);
+      this.videos = vids;
+      this.vid1 = this.videos[0].url;
+      this.vid2 = this.videos[1].url;
+      this.vid3 = this.videos[2].url;
+
     });
 
     db.getTags().subscribe((tags) => {

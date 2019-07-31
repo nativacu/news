@@ -22,14 +22,16 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
-  onSubmitRegister(email: string, password: string, fName: string, lName: string){
+  onSubmitRegister(email: string, password: string, fName: string, lName: string) {
     const data: any = {
       email,
       firstName: fName,
-      lastName: lName
+      lastName: lName,
+      subscriptions: [],
     };
     this.auth.emailRegister(email, password, data).then(() => {
         this.router.navigateByUrl('/home-page');
+        console.log(email, password, data);
     }).catch((err) => {
       window.alert(err);
     });

@@ -20,15 +20,7 @@
         </li>
       </ul>
       <button class="btn btn-secondary my-2 my-sm-0" style="margin-right: 30px" (click)="login()"> Login</button>
-      <button class="btn btn-secondary my-2 my-sm-0" style="margin-right: 30px" (click)="logout()"> Logout</button>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-1" type="text" placeholder="Search">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">
-            <i class="fas fa-search text-white"
-            aria-hidden="true"></i>
-        </button>
-
-      </form>      
+      <button class="btn btn-secondary my-2 my-sm-0" style="margin-right: 30px" (click)="logout()"> Logout</button>    
     </div>
   </nav>
 
@@ -49,8 +41,8 @@
           <!--Mask color-->
           <div class="view">
             <!--Video source-->
-            <video class="video-fluid" autoplay loop muted controls>
-              <!-- <source src={{}}> -->
+            <video class="video-fluid" height="420px" width="100%" autoplay loop muted controls>
+              <source *ngIf="vid1" src={{vid1}}>
               <!-- <source src="https://firebasestorage.googleapis.com/v0/b/news-325f6.appspot.com/o/Nick%26Jess.mp4?alt=media&token=6371c523-2374-4cdb-8d8b-5c6798753755"> -->
               <!-- <source src="https://mdbootstrap.com/img/video/Lines.mp4" type="video/mp4" /> -->
               <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/X-A9jPacX0g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
@@ -58,13 +50,7 @@
             <div class="mask rgba-indigo-light"></div>
           </div>
     
-          <!--Caption-->
-          <div class="carousel-caption">
-            <div class="animated fadeInDown">
-              <h3 class="h3-responsive">Light mask</h3>
-            </div>
-          </div>
-          <!--Caption-->
+          
         </div>
         <!-- /.First slide -->
     
@@ -73,19 +59,15 @@
           <!--Mask color-->
           <div class="view">
             <!--Video source-->
-            <video class="video-fluid" controls loop muted>
-              <source *ngIf="latestURL" src={{latestURL}}>
+            <video class="video-fluid" height="420px" width="100%"controls loop muted>
+              <source *ngIf="vid2" src={{vid2}}>
               <!-- <source src="https://mdbootstrap.com/img/video/animation-intro.mp4" type="video/mp4" /> -->
             </video>
             <div class="mask rgba-purple-slight"></div>
           </div>
     
           <!--Caption-->
-          <div class="carousel-caption">
-            <div class="animated fadeInDown">
-              <h3 class="h3-responsive">Super light mask</h3>
-            </div>
-          </div>
+          
           <!--Caption-->
         </div>
         <!-- /.Second slide -->
@@ -95,19 +77,11 @@
           <!--Mask color-->
           <div class="view">
             <!--Video source-->
-            <video class="video-fluid"  controls loop muted>
-                <source src="https://mdbootstrap.com/img/video/Lines.mp4" type="video/mp4" />
+            <video class="video-fluid"  height="420px" width="100%" controls loop muted>
+                <source  *ngIf="vid3" src={{vid3}} />
             </video>
             <div class="mask rgba-black-strong"></div>
           </div>
-    
-          <!--Caption-->
-          <div class="carousel-caption">
-            <div class="animated fadeInDown">
-              <h3 class="h3-responsive">Strong mask</h3>
-            </div>
-          </div>
-          <!--Caption-->
         </div>
         <!-- /.Third slide -->
       </div>
